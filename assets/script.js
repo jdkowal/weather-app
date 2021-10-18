@@ -35,23 +35,50 @@ function getDailyWeather() {
             })
             .then (function(data){
                 console.log(data)
-                let currentTemp = document.getElementById("current-temp")
-                currentTemp.textContent = data.current.temp
-                let feelsLike
+                let currentTemp = document.getElementById("current-temp");
+                currentTemp.textContent = data.current.temp;
+                let feelsLike = document.getElementById("current-feels-like");
+                feelsLike.textContent = data.current.feels_like;
+                let currentCondition = document.getElementById("current-condition");
+                currentCondition.textContent = data.current.weather[0].description;
+                let currentHumidity = document.getElementById("current-humidity");
+                currentHumidity.textContent = data.current.humidity;
+                let currentHigh = document.getElementById("current-high");
+                currentHigh.textContent = data.daily[0].temp.max;
+                let currentLow = document.getElementById("current-low");
+                currentLow.textContent = data.daily[0].temp.min;
+                let currentWind = document.getElementById("current-wind-speed");
+                currentWind.textContent = data.current.wind_speed
+                let currentUvi = document.getElementById("current-uvi");
+                currentUvi.textContent = data.current.uvi;
 
             })
 
+        
             
         })
+        
+    };
+    
+    function fiveDayForecast(data){
+        for (var i = 0; i < 5; i++){
+        var date = document.getElementById("date" + i);
+        date.textContent = Date((parameter[i].dt)*1000).toLocaleDateString("en-US");
+        console.log(date)
+    
+        }
+    }
+    
 
-};
 
 cityBtn.addEventListener("click",function(event){
     event.preventDefault(); 
     city = document.getElementById("city-name")
     var city = cityInput.value.trim();
+
     console.log(city);
     getDailyWeather();
+    fiveDayForecast()
 })
 
 // new function for forecast, in the parenthesis pput whatever daily forcast parameter. for instead of .lenght I'll do less than 5, only want five days. For the date add a variable = new Date((parameter[i].dt)*1000).toLocaleDateString("en-US");-->curret date for boxes
